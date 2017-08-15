@@ -22,6 +22,7 @@ import javax.swing.JTextArea;
 public class auto extends JFrame{
 
 	static TextField text1;
+	
 	public static JButton bt_start,bt_end;
 	public static JTextArea area;
 	Timer timer = null;
