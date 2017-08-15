@@ -5,8 +5,6 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.secure.asd;
-
 public class timer extends TimerTask{
 
 	@Override

@@ -95,6 +95,7 @@ public class auto extends JFrame{
 	public static void main(String[] args)
 	{
 		new auto("auto");
+		/*new asd("Interface");*/
 	}
 	
 

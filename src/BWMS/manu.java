@@ -6,14 +6,15 @@ import java.awt.Frame;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
-import com.secure.asd;
 
 public class manu extends JFrame {
 	static TextField text1,text2,text3,text4;
@@ -108,6 +109,20 @@ public class manu extends JFrame {
 		{
 			return;
 		}
+		try
+		{
+			asd.su_confirm("320");
+			/*asd.core("getReturnConfirm",asd.su_confirm("320"),"con320");*/
+			File file = new File(seqid);
+			FileWriter fileWriter =new FileWriter(file);
+            fileWriter.write("");
+            fileWriter.flush();
+            fileWriter.close();
+		}
+		catch(Exception e)
+		{
+			JOptionPane.showInternalMessageDialog(bt1, "反馈信息发送失败，请检查", "信息",JOptionPane.INFORMATION_MESSAGE);		
+		}
     	
 	}
 	protected void bt2() {
@@ -130,7 +145,7 @@ public class manu extends JFrame {
 		{
 			asd.core("expWmsData",asd.get910(),"910");
 	    	/*asd.getxml(path_910);*/
-	    	/*asd.storein(path_910 + "\\" + asd.getxml(path_910));*/   //参数为指定目录下最后修改的文件名
+	    	asd.stock(path_910 + "\\" + asd.getxml(path_910));   //参数为指定目录下最后修改的文件名
 	    	JOptionPane.showInternalMessageDialog(bt3, "下载成功", "信息",JOptionPane.INFORMATION_MESSAGE);
 		} else 
 		{

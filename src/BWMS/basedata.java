@@ -12,8 +12,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import com.secure.asd;
-
 public class basedata extends JFrame {
 	
 	static TextField text1,text2,text3,text4;
@@ -118,6 +116,7 @@ public class basedata extends JFrame {
 		if (res == JOptionPane.YES_OPTION) 
 		{
 			asd.core("impWmsData",asd.autocustom(),"102");
+			JOptionPane.showInternalMessageDialog(bt_g,"导入成功","信息", JOptionPane.INFORMATION_MESSAGE); 
 		} else 
 		{
 			return;
@@ -129,6 +128,7 @@ public class basedata extends JFrame {
 		if (res == JOptionPane.YES_OPTION) 
 		{
 			asd.core("impWmsData",asd.autoInvent(),"101");
+			JOptionPane.showInternalMessageDialog(bt_g,"导入成功","信息", JOptionPane.INFORMATION_MESSAGE); 
 		} else 
 		{
 			return;
