@@ -52,10 +52,6 @@ import org.dom4j.io.XMLWriter;
 
 public class asd extends JFrame{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 6927065070505793492L;
 	static TextField text1,text2,text3,text4;
 	static public JButton bt1,bt2,bt_down,bt_base;
 	JDesktopPane jdp;
@@ -124,10 +120,14 @@ public class asd extends JFrame{
 	private static String path_320 = "E:\\BWMS\\result\\320";
 	private static SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
 	private static SimpleDateFormat datetime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private static String log = "E:\\BWMS\\log.txt";
 	
 	public static void main(String[] args) {
+		
+		crtfile();
 		new asd("Interface");
-
+		
+		
 		
 		/*new auto("auto");*/
 		/*System.out.println(log());*/
@@ -179,7 +179,7 @@ public class asd extends JFrame{
 				return "";
 			} else {
 				System.out.println("result ====== " + result);
-				/*switch (type)
+				switch (type)
 				{
 				case "getlist" :path="E:\\BWMS\\result\\getlist\\result" + ddate() + ".xml";savexml(result,path);break;
 				case "320" :path="E:\\BWMS\\result\\320\\result" + ddate() + ".xml";savexml(result,path);break;
@@ -196,7 +196,7 @@ public class asd extends JFrame{
 				case "con400" :path="E:\\BWMS\\result\\confirm\\400\\" + ddate() + ".xml";savexml(result,path);break;
 				case "log" :path="E:\\BWMS\\log\\log" + ddate() + ".xml";savexml(result,path);break;
 				default :path="E:\\BWMS\\other\\result" + ddate() + ".xml";savexml(result,path);break;						
-				}*/
+				}
 				return result;
 			}
 		} catch (AxisFault e) {
@@ -1257,6 +1257,8 @@ public class asd extends JFrame{
 		catch (Exception e) 
         {
             e.printStackTrace();
+            writelog("货品资料批量上传：" + e + ddate());
+            return "";
         }
 		
 		try {
@@ -1373,14 +1375,18 @@ public class asd extends JFrame{
 		} catch (Exception e) {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();
-			xml101 = "";			
+			xml101 = "";	
+			writelog("货品资料批量上传：" + e + ddate());
+			return "";
 		}
 		try {
 			con.close();
 			con=null;
-		} catch (SQLException e1) {
+		} catch (SQLException e) {
 			// TODO 自动生成的 catch 块
-			e1.printStackTrace();
+			e.printStackTrace();
+			writelog("货品资料批量上传：" + e + ddate());
+	    	return "";
 		}
 		File writename = new File("E:\\BWMS\\101\\" + ddate() + "auto101.xml"); // 相对路径，如果没有则要建立一个新的output。txt文件
 		try {
@@ -1394,6 +1400,8 @@ public class asd extends JFrame{
 		} catch (IOException e) {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();
+			writelog("货品资料批量上传：" + e + ddate());
+			return "";
 		} // 创建新文件
 
 		return xml101;
@@ -1428,6 +1436,8 @@ public class asd extends JFrame{
 		catch (Exception e) 
         {
             e.printStackTrace();
+            writelog("客户资料批量上传：" + e + ddate());
+            return "";
         }
 		
 		try {
@@ -1523,14 +1533,17 @@ public class asd extends JFrame{
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();
 			xml102 = "";
-			
+			writelog("客户资料批量上传：" + e + ddate());
+			return "";			
 		}
 		try {
 			con.close();
 			con=null;
-		} catch (SQLException e1) {
+		} catch (SQLException e) {
 			// TODO 自动生成的 catch 块
-			e1.printStackTrace();
+			e.printStackTrace();
+			writelog("客户资料批量上传：" + e + ddate());
+			return "";
 		}
 		File writename = new File("E:\\BWMS\\102\\" + ddate() + "auto102.xml"); // 相对路径，如果没有则要建立一个新的output。txt文件
 		try {
@@ -1544,6 +1557,8 @@ public class asd extends JFrame{
 		} catch (IOException e) {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();
+			writelog("客户资料批量上传：" + e + ddate());
+			return "";
 		} // 创建新文件
 
 		return xml102;
@@ -1572,12 +1587,13 @@ public class asd extends JFrame{
             /*String SQL = "SELECT * FROM PO_POmain where cdefine4='2017-05-05 00:00:00.000'";*/
 			String SQL = "SELECT top 5 * FROM PO_POmain";
             stmt = con.createStatement();    
-            rs = stmt.executeQuery(SQL);
-            
+            rs = stmt.executeQuery(SQL);      
 		}
 		catch (Exception e) 
         {
             e.printStackTrace();
+            auto.area.append(e + ddate()+"\r\n");
+			writelog(e + ddate());
         }
 		
 		try {
@@ -1694,7 +1710,7 @@ public class asd extends JFrame{
 							"<totalProperty>" + count + "</totalProperty>"+  /*单据数量*/
 							"</result>";
 				/*core("impWmsData",xml301,"301");*/
-				 
+				
 				tempwrite(rs.getString("cPOID"));   //将单据号写入temp
 				File writename = new File("E:\\BWMS\\301\\" + rs.getString("cPOID") + " " + ddate()
 						+ "auto301.xml"); // 相对路径，如果没有则要建立一个新的output。txt文件
@@ -1712,14 +1728,17 @@ public class asd extends JFrame{
 					// TODO 自动生成的 catch 块
 					e.printStackTrace();		
 					auto.area.append(e + ddate()+"\r\n");
+					writelog(e + ddate());
 				}
-				auto.area.append(ccode + "导出成功 " + ddate()+"\r\n");
+				auto.area.append(ccode + "上传成功 " + ddate()+"\r\n");
+				writelog(ccode + "上传成功 " + ddate());
 			}			
 		} catch (Exception e) {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();
 			xml301 = "";	
-			auto.area.append(ccode + "导出失败 " + ddate()+"\r\n");
+			auto.area.append(ccode + "上传失败 " + ddate()+"\r\n");
+			writelog(ccode + "上传失败 " + ddate());
 		}
 		try {
 			con.close();
@@ -1728,6 +1747,7 @@ public class asd extends JFrame{
 			// TODO 自动生成的 catch 块
 			e1.printStackTrace();
 			auto.area.append(e1 + ddate()+"\r\n");
+			writelog(e1 + ddate());
 		}	 
 		return xml301;
 	}
@@ -1761,6 +1781,8 @@ public class asd extends JFrame{
 		catch (Exception e) 
         {
             e.printStackTrace();
+            auto.area.append(e + ddate()+"\r\n");
+			writelog(e + ddate());
         }
 		
 		try {
@@ -1899,8 +1921,10 @@ public class asd extends JFrame{
 						// TODO 自动生成的 catch 块
 						e.printStackTrace();
 						auto.area.append(e + ddate()+"\r\n");
+						writelog(e + ddate());
 					}
-					auto.area.append(ccode + "导出成功 " + ddate()+"\r\n");
+					auto.area.append(ccode + "上传成功 " + ddate()+"\r\n");
+					writelog(ccode + "上传成功 " + ddate());
 				}
 				else if(rs.getString("bReturnFlag").equals("1"))    //销售退货
 				{
@@ -2035,8 +2059,10 @@ public class asd extends JFrame{
 					{
 						e.printStackTrace();
 						auto.area.append(e + ddate()+"\r\n");
+						writelog(e + ddate());
 					}
-					auto.area.append(ccode + "导出成功 " + ddate()+"\r\n");
+					auto.area.append(ccode + "上传成功 " + ddate()+"\r\n");
+					writelog(ccode + "上传成功 " + ddate());
 				}
 		    }
 		} catch (Exception e) {
@@ -2044,7 +2070,8 @@ public class asd extends JFrame{
 			e.printStackTrace();
 			xml302 = "";	
 			xml301 = "";
-			auto.area.append(ccode + "导出失败 " + ddate()+"\r\n");
+			auto.area.append(ccode + "上传失败 " + ddate()+"\r\n");
+			writelog(ccode + "上传失败 " + ddate());
 		}				
 		try {
 			con.close();
@@ -2053,6 +2080,7 @@ public class asd extends JFrame{
 			// TODO 自动生成的 catch 块
 			e1.printStackTrace();
 			auto.area.append(e1 + ddate()+"\r\n");
+			writelog(e1 + ddate());
 		}	
 		return xml302;
 	}
@@ -2085,6 +2113,7 @@ public class asd extends JFrame{
 		catch (Exception e) 
         {
             e.printStackTrace();
+            writelog(e + ddate());
         }
 		
 		try {
@@ -2207,7 +2236,7 @@ public class asd extends JFrame{
 							"<totalProperty>" + count + "</totalProperty>"+  /*单据数量*/
 							"</result>";
 				core("impWmsData",xml301,"301");
-				 
+				writelog("采购订单" + code + "上传成功" + ddate()); //写入log 
 				tempwrite(rs.getString("cPOID"));   //将单据号写入temp
 				File writename = new File("E:\\BWMS\\301\\" + rs.getString("cPOID") + " " + ddate()
 						+ "manu301.xml"); // 相对路径，如果没有则要建立一个新的output。txt文件
@@ -2223,13 +2252,15 @@ public class asd extends JFrame{
 				} catch (IOException e) {
 					// TODO 自动生成的 catch 块
 					e.printStackTrace();
+					writelog(e + ddate());
 				}
 			}
 			
 		} catch (Exception e) {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();
-			xml301 = "";			
+			xml301 = "";		
+			writelog(e + ddate());
 		}
 		
 		if (xml301.equals("")) 
@@ -2242,13 +2273,13 @@ public class asd extends JFrame{
 		try {
 			con.close();
 			con = null;
-		} catch (SQLException e1) {
+		} catch (SQLException e) {
 			// TODO 自动生成的 catch 块
-			e1.printStackTrace();
+			e.printStackTrace();
+			writelog(e + ddate());
 		}
 		return xml301;
 	}
-	
 	
     public static String manuso(String code)   /*手动上传发货单*/
     {
@@ -2281,9 +2312,9 @@ public class asd extends JFrame{
 		catch (Exception e) 
         {
             e.printStackTrace();
+            writelog(e + ddate());
         }
-		
-		
+			
 		try {
 			if (!rs.next())
 			{
@@ -2410,8 +2441,9 @@ public class asd extends JFrame{
 				xml302=xml302 + "</doc>" +
 							"<totalProperty>" + count + "</totalProperty>"+  /*单据数量*/
 							"</result>";
-				/*core("impWmsData",xml302,"302");*/
+				core("impWmsData",xml302,"302");
 				tempwrite(rs.getString("cDLCode"));   //将单据号写入temp
+				writelog("发货单" + code + "上传成功" + ddate()); //写入log
 				writename = new File("E:\\BWMS\\302\\" + rs.getString("cDLCode") + " " + ddate()
 						+ "manu302.xml"); // 相对路径，如果没有则要建立一个新的output。txt文件
 				xml = xml302;
@@ -2532,8 +2564,8 @@ public class asd extends JFrame{
 								"<totalProperty>" + count + "</totalProperty>"+  /*单据数量*/
 								"</result>";
 					
-					/*core("impWmsData",xml301,"301");*/
-					 
+					core("impWmsData",xml301,"301");
+					writelog("发货单" + code + "上传成功" + ddate()); //写入log 
 					tempwrite(rs.getString("cDLCode"));   //将单据号写入temp
 					writename = new File("E:\\BWMS\\301\\" + rs.getString("cDLCode") + " " + ddate()
 							+ "manu301.xml"); // 相对路径，如果没有则要建立一个新的output。txt文件		
@@ -2552,6 +2584,7 @@ public class asd extends JFrame{
 				} catch (IOException e) {
 					// TODO 自动生成的 catch 块
 					e.printStackTrace();
+					writelog(e + ddate()); //写入log
 				}
 			}
 			
@@ -2559,13 +2592,15 @@ public class asd extends JFrame{
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();
 			xml = "";
+			writelog(e + ddate()); //写入log
 		}	
 		try {
 			con.close();
 			con=null;
-		} catch (SQLException e1) {
+		} catch (SQLException e) {
 			// TODO 自动生成的 catch 块
-			e1.printStackTrace();
+			e.printStackTrace();
+			writelog(e + ddate()); //写入log
 		}	
 		return xml;
 	}
@@ -2599,6 +2634,7 @@ public class asd extends JFrame{
 		catch (Exception e) 
         {
             e.printStackTrace();
+            writelog("客户资料：" + e + ddate());
         }
 		
 		try {
@@ -2695,19 +2731,28 @@ public class asd extends JFrame{
 			xml102=xml102+"</doc>"+
 					"<totalProperty>" + count + "</totalProperty>"+  /*单据数量*/
 					"</result>";
-			core("impWmsData",xml102,"102");    //上传
+			if(core("impWmsData",xml102,"102").indexOf("success") > -1)   //上传
+			{
+				writelog("客户资料：" + code + "上传成功" + ddate());
+			}
+			else
+			{
+				writelog("客户资料：" + code + "上传失败" + ddate());
+			}
+			
 		} catch (Exception e) {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();
-			xml102 = "";
-			
+			writelog("客户资料：" + e + ddate());
+			xml102 = "";		
 		}
 		try {
 			con.close();
 			con=null;
-		} catch (SQLException e1) {
+		} catch (SQLException e) {
 			// TODO 自动生成的 catch 块
-			e1.printStackTrace();
+			e.printStackTrace();
+			writelog("客户资料：" + e + ddate());
 		}
 		File writename = new File("E:\\BWMS\\102\\" + ddate() + "manu102.xml"); // 相对路径，如果没有则要建立一个新的output。txt文件
 		try {
@@ -2721,13 +2766,14 @@ public class asd extends JFrame{
 		} catch (IOException e) {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();
+			writelog("客户资料：" + e + ddate());
 		} // 创建新文件
 
 		
 		return xml102;
     }
     
-	public static String manuInvent(String code)    
+	public static String manuInvent(String code)    /*手动上传货品资料*/
 	{
 		Date d = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -2757,6 +2803,7 @@ public class asd extends JFrame{
 		catch (Exception e) 
         {
             e.printStackTrace();
+            writelog("货品资料：" + e + ddate());
         }
 		
 		try {
@@ -2875,18 +2922,27 @@ public class asd extends JFrame{
 						+ "</totalProperty>" +  /*单据数量 */
 						"</result>";
 			
-				core("impWmsData",xml101,"101");
+				if(core("impWmsData",xml101,"101").indexOf("success") > -1)
+				{
+					writelog("货品资料：" + code + "上传成功" + ddate());
+				}
+				else
+				{
+					writelog("货品资料：" + code + "上传失败" + ddate());
+				}
 		} catch (Exception e) {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();
+			writelog("货品资料：" + e + ddate());
 			xml101 = "";			
 		}
 		try {
 			con.close();
 			con=null;
-		} catch (SQLException e1) {
+		} catch (SQLException e) {
 			// TODO 自动生成的 catch 块
-			e1.printStackTrace();
+			e.printStackTrace();
+			writelog("货品资料：" + e + ddate());
 		}
 		File writename = new File("E:\\BWMS\\101\\" + ddate() + "manu101.xml"); // 相对路径，如果没有则要建立一个新的output。txt文件
 		try {
@@ -2900,6 +2956,7 @@ public class asd extends JFrame{
 		} catch (IOException e) {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();
+			writelog("货品资料：" + e + ddate());
 		} // 创建新文件
 
 		return xml101;
@@ -2959,6 +3016,7 @@ public class asd extends JFrame{
 	    FileWriter fw = null;
 		String porderid = "";
 		String sql = "";
+		String lorderids = "";  //用来储存所有的入库单单号
 		String xml320 = "<?xml version=\"1.0\" encoding=\"utf-8\"?><ufinterface sender=\"A008\" receiver=\"u8\" roottag=\"storein\" proc=\"add\" docid=\"345821559\" codeexchanged=\"N\" exportneedexch=\"N\" display=\"入库单\" family=\"库存管理\" timestamp=\"0x00000000001D47D5\">";
 		try {
 			doc = reader.read(f);
@@ -2967,6 +3025,20 @@ public class asd extends JFrame{
 			Element element_ = (Element) iter_.next();
 			testDownload("","bwmssql.txt");  //下载bwmssql.txt
 			/*Element foo;*/
+			for (Iterator iter = element_.elementIterator("e"); iter.hasNext();)   //用来输出日志
+			{
+				Element element = (Element) iter.next();
+				if(lorderids.indexOf(element.elementText("lorderid")) > -1)
+				{				
+				}
+				else
+				{
+					lorderids = lorderids + element.elementText("lorderid") + " ";
+				}				
+			}
+            auto.area.append(lorderids + "下载成功 " + ddate()+"\r\n");
+			writelog(lorderids + "下载成功 " + ddate());
+			
 			for (Iterator iter = element_.elementIterator("e"); iter.hasNext();) 
 			{
 				Element element = (Element) iter.next();
@@ -3095,6 +3167,8 @@ public class asd extends JFrame{
 				fw.close();  
 			} catch (IOException e) {
 				e.printStackTrace();
+                auto.area.append(e + ddate()+"\r\n");
+				writelog(e + ddate());
 			}
 			
 			String fd = ddate();
@@ -3111,6 +3185,8 @@ public class asd extends JFrame{
 			} catch (IOException e) {
 				// TODO 自动生成的 catch 块
 				e.printStackTrace();
+				auto.area.append(e + ddate()+"\r\n");
+				writelog(e + ddate());
 			} // 创建新文件
 	        
 			try {
@@ -3118,7 +3194,8 @@ public class asd extends JFrame{
 				testUpload(filepath,filename,"BWMS//storein");
 				testUpload(bwmssql,"bwmssql.txt","");
 			} catch (Exception e) {
-
+				auto.area.append(e + ddate()+"\r\n");
+				writelog(e + ddate());
 			}
 			
 			for (Iterator iter = element_.elementIterator("e"); iter.hasNext();)   //添加seqid 用来反馈信息
@@ -3136,12 +3213,15 @@ public class asd extends JFrame{
 					fw.close();  
 				} catch (IOException e) {
 					e.printStackTrace();
+					auto.area.append(e + ddate()+"\r\n");
+					writelog(e + ddate());
 				}
-			}
-			
+			}			
 		} catch (Exception e) {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();
+			auto.area.append(e + ddate()+"\r\n");
+			writelog(e + ddate());
 		}   
 	}
 	
@@ -3178,10 +3258,12 @@ public class asd extends JFrame{
 			String[][] data = (String [][])arrayList.toArray(new String[0][0]);
 			ExcelOperater we = new ExcelOperater("e:/BWMS/stock.xls"); 
 			we.writeEx(i, data);
+			writelog("库存获取成功" + ddate());
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
+			writelog("库存获取失败" + e + ddate());
 		}
 	}
 	
@@ -3334,6 +3416,26 @@ public class asd extends JFrame{
 		}				  
 	}
 	
+	public static void writelog(String str)   /*写入log*/
+	{
+		FileWriter fw = null;
+
+		try {
+			// 如果文件存在，则追加内容；如果文件不存在，则创建文件
+			File f = new File(log);
+			fw = new FileWriter(f, true);
+			PrintWriter pw = new PrintWriter(fw);
+			pw.println(str);
+			pw.flush();
+			fw.flush();
+			pw.close();
+			fw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+			
+	}
+
 	public static void testUpload(String filepath,String filename,String type)   //FTP上传  （需上传文件路径，文件名，FTP路径名）
 	{ 
         FTPClient ftpClient = new FTPClient(); 
@@ -3395,4 +3497,65 @@ public class asd extends JFrame{
 	        } 
 	    } 
 	
+    public static void existfile(String filepath)   //判断文件夹，若无则创建
+    {
+    	File file = new File(filepath);
+    	if(!file.exists())
+    	{
+			try {
+				file.mkdir();
+				writelog(filepath + "创建完成");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
+    	else
+    	{
+    		writelog(filepath + "已创建");
+    	}
+    }
+    
+    public static void crtfile()   //创建文件夹
+    {
+    	existfile("E:\\BWMS\\101");
+    	existfile("E:\\BWMS\\102");
+    	existfile("E:\\BWMS\\301");
+    	existfile("E:\\BWMS\\302");
+    	existfile("E:\\BWMS\\320");
+    	existfile("E:\\BWMS\\340");
+    	existfile("E:\\BWMS\\400");
+    	existfile("E:\\BWMS\\910");
+    	existfile("E:\\BWMS\\confirm\\320");
+    	existfile("E:\\BWMS\\confirm\\340");
+    	existfile("E:\\BWMS\\confirm\\400");
+    	existfile("E:\\BWMS\\confirm\\910");
+    	existfile("E:\\BWMS\\log");
+    	existfile("E:\\BWMS\\other");
+    	existfile("E:\\BWMS\\result\\101");
+    	existfile("E:\\BWMS\\result\\102");
+    	existfile("E:\\BWMS\\result\\301");
+    	existfile("E:\\BWMS\\result\\302");
+    	existfile("E:\\BWMS\\result\\320");
+    	existfile("E:\\BWMS\\result\\340");
+    	existfile("E:\\BWMS\\result\\400");
+    	existfile("E:\\BWMS\\result\\910");
+    	existfile("E:\\BWMS\\result\\confirm");
+    	existfile("E:\\BWMS\\result\\getlist");
+    	existfile("E:\\BWMS\\storein");
+    	existfile("E:\\BWMS\\storeout");
+    }
+    
+    public static void empty(String file)   //清空指定TXT文件
+    {
+    	try {
+            FileWriter fileWriter =new FileWriter(file);
+            fileWriter.write("");
+            fileWriter.flush();
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
 }

@@ -14,6 +14,9 @@ import javax.swing.JOptionPane;
 
 public class basedata extends JFrame {
 	
+	private static String log = "E:\\BWMS\\log.txt";
+	public static int flag = 1;
+	
 	static TextField text1,text2,text3,text4;
 	public static JButton bt_g,bt_h,bt_k,bt1,bt2,bt3;
     public basedata(String s)  
@@ -115,8 +118,25 @@ public class basedata extends JFrame {
 		int res = JOptionPane.showConfirmDialog(null, "是否确认要全部导入？","是否继续",JOptionPane.YES_NO_OPTION);
 		if (res == JOptionPane.YES_OPTION) 
 		{
-			asd.core("impWmsData",asd.autocustom(),"102");
-			JOptionPane.showInternalMessageDialog(bt_g,"导入成功","信息", JOptionPane.INFORMATION_MESSAGE); 
+			String msg = asd.autocustom();
+			if(msg.equals(""))
+			{
+				JOptionPane.showInternalMessageDialog(bt_g,"导入失败","信息", JOptionPane.INFORMATION_MESSAGE); 			
+			    return;
+			}
+			else
+			{
+				if(asd.core("impWmsData",msg,"102").indexOf("success") > -1)
+				{
+					asd.writelog("客户资料批量上传成功：" + asd.ddate());
+					JOptionPane.showInternalMessageDialog(bt_g,"导入成功","信息", JOptionPane.INFORMATION_MESSAGE);
+				}
+				else
+				{
+					asd.writelog("客户资料批量上传失败：" + asd.ddate());
+					return;
+				}
+			}					 
 		} else 
 		{
 			return;
@@ -127,8 +147,25 @@ public class basedata extends JFrame {
 		int res = JOptionPane.showConfirmDialog(null, "是否确认要全部导入？", "是否继续",JOptionPane.YES_NO_OPTION);
 		if (res == JOptionPane.YES_OPTION) 
 		{
-			asd.core("impWmsData",asd.autoInvent(),"101");
-			JOptionPane.showInternalMessageDialog(bt_g,"导入成功","信息", JOptionPane.INFORMATION_MESSAGE); 
+			String msg = asd.autoInvent();
+			if(msg.equals(""))
+			{
+				JOptionPane.showInternalMessageDialog(bt_g,"导入失败","信息", JOptionPane.INFORMATION_MESSAGE);
+				return;
+			}
+			else
+            {
+				if (asd.core("impWmsData", msg, "101").indexOf("success") > -1) 
+				{
+					asd.writelog("货品资料批量上传成功：" + asd.ddate());
+					JOptionPane.showInternalMessageDialog(bt_g, "导入成功", "信息",JOptionPane.INFORMATION_MESSAGE);
+				} 
+				else 
+				{
+					asd.writelog("货品资料批量上传失败：" + asd.ddate());
+					return;
+				}
+			}
 		} else 
 		{
 			return;

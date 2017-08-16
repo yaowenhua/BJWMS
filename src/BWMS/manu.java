@@ -104,6 +104,8 @@ public class manu extends JFrame {
 			asd.core("expWmsData",asd.get320(),"320");
 	    	/*asd.getxml(path_320);*/
 	    	asd.storein(path_320 + "\\" + asd.getxml(path_320));   //参数为指定目录下最后修改的文件名
+	    	/*asd.core("getReturnConfirm",asd.su_confirm("320"),"con320"); */  //下载成功，反馈给WMS
+	    	/*asd.empty(seqid); */   //清空seqid文件
 	    	JOptionPane.showInternalMessageDialog(bt1, "下载成功", "信息",JOptionPane.INFORMATION_MESSAGE);
 		} else 
 		{
