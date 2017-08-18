@@ -25,12 +25,14 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
+
 import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.xml.namespace.QName;
+
 
 
 import org.apache.axis2.AxisFault;
@@ -3268,26 +3270,39 @@ public class asd extends JFrame{
 	}
 	
 	protected void bt1() {
-		String msg = manupo(text2.getText()); 
-		if (msg.equals("")) 
+		int res = JOptionPane.showConfirmDialog(null, "确定要上传该采购订单吗？","是否继续",JOptionPane.YES_NO_OPTION);
+		if (res == JOptionPane.YES_OPTION) 
 		{
-			JOptionPane.showInternalMessageDialog(bt1, "上传失败", "信息",JOptionPane.INFORMATION_MESSAGE);
-		} else if (!msg.equals("1"))
+			String msg = manupo(text2.getText()); 
+			if (msg.equals("")) 
+			{
+				JOptionPane.showInternalMessageDialog(bt1, "上传失败", "信息",JOptionPane.INFORMATION_MESSAGE);
+			} else if (!msg.equals("1"))
+			{
+				JOptionPane.showInternalMessageDialog(bt1, "上传完成", "信息",JOptionPane.INFORMATION_MESSAGE);			
+			}
+		} else 
 		{
-			JOptionPane.showInternalMessageDialog(bt1, "上传完成", "信息",JOptionPane.INFORMATION_MESSAGE);			
-		}
+			return;
+		}	
 	}
 	
 	protected void bt2() {
-		/*JOptionPane.showInternalMessageDialog(bt2,text4.getText(),"信息", JOptionPane.INFORMATION_MESSAGE); 	*/	
-		String msg = manuso(text4.getText()); 	
-		if (msg.equals("")) 
+		int res = JOptionPane.showConfirmDialog(null, "确定要上传该发货单吗？","是否继续",JOptionPane.YES_NO_OPTION);
+		if (res == JOptionPane.YES_OPTION) 
 		{
-			JOptionPane.showInternalMessageDialog(bt2, "上传失败", "信息",JOptionPane.INFORMATION_MESSAGE);
-		} else if (!msg.equals("1"))
+			String msg = manuso(text4.getText()); 	
+			if (msg.equals("")) 
+			{
+				JOptionPane.showInternalMessageDialog(bt2, "上传失败", "信息",JOptionPane.INFORMATION_MESSAGE);
+			} else if (!msg.equals("1"))
+			{
+				JOptionPane.showInternalMessageDialog(bt2, "上传完成", "信息",JOptionPane.INFORMATION_MESSAGE);			
+			}
+		} else 
 		{
-			JOptionPane.showInternalMessageDialog(bt2, "上传完成", "信息",JOptionPane.INFORMATION_MESSAGE);			
-		}
+			return;
+		}	
 	}
 	protected void bt_down()
 	{
@@ -3503,7 +3518,7 @@ public class asd extends JFrame{
     	if(!file.exists())
     	{
 			try {
-				file.mkdir();
+				file.mkdirs();
 				writelog(filepath + "创建完成");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

@@ -104,27 +104,26 @@ public class manu extends JFrame {
 			asd.core("expWmsData",asd.get320(),"320");
 	    	/*asd.getxml(path_320);*/
 	    	asd.storein(path_320 + "\\" + asd.getxml(path_320));   //参数为指定目录下最后修改的文件名
-	    	/*asd.core("getReturnConfirm",asd.su_confirm("320"),"con320"); */  //下载成功，反馈给WMS
-	    	/*asd.empty(seqid); */   //清空seqid文件
 	    	JOptionPane.showInternalMessageDialog(bt1, "下载成功", "信息",JOptionPane.INFORMATION_MESSAGE);
 		} else 
 		{
 			return;
 		}
-		try
+		/*try  //下载成功，反馈给WMS
 		{
-			asd.su_confirm("320");
-			/*asd.core("getReturnConfirm",asd.su_confirm("320"),"con320");*/
+			asd.core("getReturnConfirm",asd.su_confirm("320"),"con320");
 			File file = new File(seqid);
 			FileWriter fileWriter =new FileWriter(file);
             fileWriter.write("");
             fileWriter.flush();
             fileWriter.close();
+            
+            asd.empty(seqid);  //清空seqid文件
 		}
 		catch(Exception e)
 		{
 			JOptionPane.showInternalMessageDialog(bt1, "反馈信息发送失败，请检查", "信息",JOptionPane.INFORMATION_MESSAGE);		
-		}
+		}*/
     	
 	}
 	protected void bt2() {
@@ -132,8 +131,7 @@ public class manu extends JFrame {
 		if (res == JOptionPane.YES_OPTION) 
 		{
 			asd.core("expWmsData",asd.get340(),"340");
-	    	/*asd.getxml(path_340);*/
-	    	/*asd.storein(path_340 + "\\" + asd.getxml(path_340));*/   //参数为指定目录下最后修改的文件名
+	    	/*asd.getxml(path_340);*/  
 	    	JOptionPane.showInternalMessageDialog(bt2, "下载成功", "信息",JOptionPane.INFORMATION_MESSAGE);
 		} else 
 		{

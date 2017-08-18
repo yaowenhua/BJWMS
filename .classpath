@@ -74,7 +74,6 @@
 	<classpathentry kind="lib" path="E:/BWMS/lib/mail-1.4.jar"/>
 	<classpathentry kind="lib" path="E:/BWMS/lib/mex-1.7.5-impl.jar"/>
 	<classpathentry kind="lib" path="E:/BWMS/lib/neethi-3.0.3.jar"/>
-	<classpathentry kind="lib" path="E:/BWMS/lib/sqljdbc.jar"/>
 	<classpathentry kind="lib" path="E:/BWMS/lib/sqljdbc4.jar"/>
 	<classpathentry kind="lib" path="E:/BWMS/lib/stax2-api-3.1.1.jar"/>
 	<classpathentry kind="lib" path="E:/BWMS/lib/tribes-6.0.16.jar"/>
